@@ -10,8 +10,13 @@ class UserController
         $user = new User;
         $name = $user->getName();
 
-        view('user.hello', [
+        view('users.hello', [
             'name' => $name
         ]);
+    }
+
+    public function word()
+    {
+        echo 'word';
     }
 }
