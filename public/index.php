@@ -61,3 +61,20 @@ function view($viewFileName,$data = [])
 }
 
 
+function getUrl($par=[])
+{
+    $ret = '';
+    foreach($par as $k => $v){
+      
+        unset($_GET[$v]);
+    }
+
+   
+    
+    foreach($_GET as $k => $v)
+    {
+        $ret .= "&$k=$v";
+    }
+    return $ret;
+}
+

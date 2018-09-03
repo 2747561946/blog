@@ -16,15 +16,7 @@ class BlogController
         //标题内容搜索
         $where = 1;
         $value = [];
-        // if(isset($_GET['keyword']) && $_GET['keyword'])
-        // {
-        //     // $where .= ' AND title like "%'.$_GET['keyword'].'%" or content like "%'.$_GET['keyword'].'%"';
-        //     $where .= " AND (title LIKE '%'.?.'%' ) ";
-        //     $value[] = $_GET['keyword'];
-           
-        // }
-
-
+        
         if(isset($_GET['keyword']) && $_GET['keyword'])
         {
             $where .= " AND (title LIKE ?)";
@@ -32,8 +24,6 @@ class BlogController
             $value[] = '%'.$_GET['keyword'].'%';
            
         }
-
-
 
         //开始时间
        
@@ -58,8 +48,25 @@ class BlogController
         }
 
 
+        //==========排序order=========
+
+        //默认排序
+        $orderBy = 'created_at';
+        $orderWay = 'desc';
+
+        //排序字段
+        if(isset($_GET['order_by']) && $_GET['order_by'] == 'display')
+        {
+            $orderBy = 'display';
+        }
+        //排序方式
+        if(isset($_GET['order_way']) && $_GET['order_way'] == 'desc')
+        {
+            $orderWay = 'asc';
+        }
+
         // 执行sql
-        $stmt = $pdo->prepare("select * from blogs where $where");
+        $stmt = $pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay");
         // echo "select * from blogs where $where";
         $stmt->execute($value);
 

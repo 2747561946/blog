@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>riz liebi</title>
 </head>
+<style>
+    .active {
+        color: red;
+        font-size: 1.2em;
+    }
+</style>
 <body>
     <h1>日志列表</h1>
 
@@ -13,7 +19,7 @@
 
         <div>
             关键字：
-            <input type="text" name="keyword" id="" value="<?=$_GET['keyword']; ?>">
+            <input type="text" name="keyword" id="" value="<?=@$_GET['keyword']; ?>">
             发表日期：
             <input type="text" name="start_date" value="<?=@$_GET['start_date']; ?>" id=""> ~
             <input type="text" name="end_date" value="<?=@$_GET['end_date']; ?>" id="">
@@ -31,10 +37,22 @@
         <tr>
             <th>ID</th>
             <th width="45%">标题</th>
-            <th>发表日期</th>
+            <th>
+
+                <a <?php if(@$_GET['order_by']=='date' && @$_GET['order_way']=='asc') echo 'class="active"' ?> href="?order_by=date&order_way=asc<?=getUrl(['order_by','order_way'])?>">㊤</a>
+
+               
+                发表日期
+           
+                <a <?php if(@$_GET['order_by']=='date' && @$_GET['order_way']=='desc') echo 'class="active"' ?> href="?order_by=date&order_way=desc<?=getUrl(['order_by','order_way'])?>">㊦</a>
+            </th>
             <th>修改日期</th>
             <th>是否隐藏</th>
-            <th>浏览量</th>
+            <th>
+                <a <?php if(@$_GET['order_by']=='display' && @$_GET['order_way']=='asc') echo 'class="active"' ?> href="?order_by=display&order_way=asc<?=getUrl(['order_by','order_way'])?>">㊤</a>
+                浏览量
+                <a <?php if(@$_GET['order_by']=='display' && @$_GET['order_way']=='desc') echo 'class="active"' ?> href="?order_by=display&order_way=desc<?=getUrl(['order_by','order_way'])?>">㊦</a>
+            </th>
             <th>操作</th>
         </tr>
         <?php foreach($data as $v): ?>
