@@ -5,8 +5,10 @@ use PDO;
 
 class BlogController
 {
+    // public $pdo;
     public function index()
     {
+        
         //取日志数据
         $pdo = new PDO('mysql:host=127.0.0.1;dbname=blog','root','123');
         $pdo->exec('set names utf8');
@@ -65,9 +67,58 @@ class BlogController
             $orderWay = 'asc';
         }
 
-        // 执行sql
-        $stmt = $pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay");
-        // echo "select * from blogs where $where";
+        //===========翻页==============
+
+        //每页条数
+        $perpage = 10;
+        //获取当前页码
+        $page = isset($_GET['page']) ? max(1,(int)$_GET['page']) : 1;
+        
+        //计算起始值
+        $staPage = ($page-1) * $perpage;
+        //拼limit
+        $limit = $staPage.','.$perpage;
+
+        //===========翻页按钮
+        //获取总记录数
+
+        // $allCount = $blogs->count($where);
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM blogs WHERE $where");
+        $stmt->execute($value);
+
+        $allCount = $stmt->fetch(PDO::FETCH_COLUMN);
+        // var_dump( $allCount );
+        //获取总页数
+        $pageCount = ceil($allCount/$perpage);
+        // var_dump($pageCount);
+        $pageBtn = '';
+        for($i=1;$i<$pageCount;$i++)
+        {
+            $params = getUrl(['page']);
+            $pageBtn .= "<a href='?{$params}page=$i'>{$i}</a>";
+        }
+
+
+        // 按钮背景
+        $pageBtn = '';
+        for($i=1; $i<=$pageCount; $i++)
+        {
+            // 获取当前除了 page 之前的其它参数
+            $urlParams = getUrl(['page']);
+
+            // 为当前页码添加样式
+            if($i == $page)
+                $class="class='pages";
+            else
+                $class='';
+
+            $pageBtn .= "<a $class href='?page={$i}{$urlParams}'> {$i} </a>";
+        }
+
+
+        // =========执行sql
+        $stmt = $pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay LIMIT $staPage,$perpage");
+        echo "SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay LIMIT $staPage,$perpage";
         $stmt->execute($value);
 
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -78,6 +129,7 @@ class BlogController
         //加载视图文件
         view('blogs.index',[
             'data' => $data,
+            'pageBtn' => $pageBtn,
         ]);
     }
 }
