@@ -2,6 +2,8 @@
 //定义常量
 define('ROOT',dirname(__FILE__) . '/../');
 
+
+// require(ROOT.'vendor/autoload.php');
 // require(ROOt. 'controller/UserController.php');
 //实现自动加载
 function autoload($class)
