@@ -5,6 +5,7 @@ use PDO;
 
 class BlogController
 {
+
     // public $pdo;
     public function index()
     {
@@ -12,6 +13,9 @@ class BlogController
         //取日志数据
         $pdo = new PDO('mysql:host=127.0.0.1;dbname=blog','root','123');
         $pdo->exec('set names utf8');
+
+
+       
 
         //**************搜索************
 
@@ -118,11 +122,14 @@ class BlogController
 
         // =========执行sql
         $stmt = $pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay LIMIT $staPage,$perpage");
-        echo "SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay LIMIT $staPage,$perpage";
+        // echo "SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay LIMIT $staPage,$perpage";
         $stmt->execute($value);
 
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
+
+       
+                
 
         // echo '<pre>';
         // var_dump($data);
@@ -131,5 +138,33 @@ class BlogController
             'data' => $data,
             'pageBtn' => $pageBtn,
         ]);
+    }
+
+    public function contents()
+    {
+        // 取日志的数据
+        $pdo = new PDO('mysql:host=127.0.0.1;dbname=blog', 'root', '123');
+        $pdo->exec('SET NAMES utf8');
+
+        $stmt = $pdo->query('SELECT * FROM blogs');
+        $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // 开启缓冲区
+        ob_start();
+
+        // 生成静态页
+        foreach($blogs as $v)
+        {
+            // 加载视图
+            view('blogs.content', [
+                'blog' => $v,
+            ]);
+            // 取出缓冲区的内容
+            $str = ob_get_contents();
+            // 生成静态页
+            file_put_contents(ROOT.'public/contents/'.$v['id'].'.html', $str);
+            // 清空缓冲区
+            ob_clean();
+        }
     }
 }
