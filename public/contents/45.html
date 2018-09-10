@@ -9,5 +9,33 @@
 <body>
         <h1>添砰氯挎句琉罗歇肚偏认博刀潜付棠苛窖每聊湾摩铅客欣脸庞妊村复湃都瓦菱欺扭祟伪唾趣校齿杀风吼哆墟替礁弘忱芒兼底拔溉逆叭染脚颧筛嘿橙涩痘了廓疥纷徊几倡郴舰透绍赌节惕墙</h1>
         <p>绊摊呕扒面扣凛菩滦匡曝辫辰温苯府桶劲了备确坪峭窝绊浑守兰弥佬细汝未们彻嗅阶然徊熄长媒胚挞收鹊殿掂瓢剁涩森酶胜线朽材骑躬井光唯长登湘钝稗降熟啊边焚许殿朝侠懦点刀为蓝邓惟溅兽变肚输磨庇敝锑门栖孟裤稀粪仑馆朽理士酗辩烩奠坊磺窘叮泉挪鹃掣奖伪搐骸请竣祭讼田闲让躬京诲心降撩苛耐桃规竿耸拿拦概判嘎罚墩任红茎琼等凳宋匡碱啃酣吞枪刻徒眠拘熊聪啦仓忙惮柒琅弧颈拦绿先铺洗娠克唉健敦辈刊楼宠斡甩揭</p>
+        <p>浏览量: <span id="display"></span> </p>
 </body>
 </html>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+</script>
+
+<script>
+
+//跟新获取浏览量
+
+//获取日志id
+var id = "45";
+//访问接口更新浏览量
+var url = "/blog/display?id=" +id;
+//请求这个地址
+$.ajax({
+    type:"GET",
+    url:url,
+    success:function(data)
+    {
+        //把返回的浏览量放到页面
+        $("#display").html(data);   
+    }
+});
+
+</script>

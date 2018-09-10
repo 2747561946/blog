@@ -98,3 +98,19 @@ function getUrl($par=[])
     return $ret;
 }
 
+//获取配置文件
+//无论调用多少次 只包含一次配置文件
+// 静态局部变量 函数执行结束也不会销毁 一直存在到整个脚本结束
+// 普通局部变量 函数执行完就销毁
+function config($name)
+{
+    static $config = null;
+    if($config === null)
+    {
+        $config = require(ROOT.'config.php');
+    }
+    
+
+    return $config($name);
+}
+

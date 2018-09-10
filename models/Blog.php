@@ -1,16 +1,10 @@
 <?php
 namespace models;
 use PDO;
-class Blog
+use libs\Rerdis;
+class Blog extends Base
 {
-    public $pdo;
-    public function __construct()
-    {
-
-         //取日志数据
-         $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=blog','root','123');
-         $this->pdo->exec('set names utf8');
-    }
+    
 
      //**************搜索************
     public function search()
@@ -84,7 +78,7 @@ class Blog
         //获取总记录数
 
         // $allCount = $blogs->count($where);
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM blogs WHERE $where");
+        $stmt = self::$pdo->prepare("SELECT COUNT(*) FROM blogs WHERE $where");
         $stmt->execute($value);
 
         $allCount = $stmt->fetch(PDO::FETCH_COLUMN);
@@ -118,7 +112,7 @@ class Blog
 
 
         // =========执行sql
-        $stmt = $this->pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay LIMIT $staPage,$perpage");
+        $stmt = self::$pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay LIMIT $staPage,$perpage");
         // echo "SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderWay LIMIT $staPage,$perpage";
         $stmt->execute($value);
 
@@ -138,7 +132,7 @@ class Blog
         // $pdo = new PDO('mysql:host=127.0.0.1;dbname=blog', 'root', '123');
         // $pdo->exec('SET NAMES utf8');
 
-        $stmt = $this->pdo->query('SELECT * FROM blogs');
+        $stmt = self::$pdo->query('SELECT * FROM blogs');
         $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // 开启缓冲区
@@ -162,7 +156,7 @@ class Blog
 
     public function indexHt()
     {
-        $stmt = $this->pdo->query("SELECT * FROM blogs WHERE is_show=1 ORDER BY id DESC LIMIT 20");
+        $stmt = self::$pdo->query("SELECT * FROM blogs WHERE is_show=1 ORDER BY id DESC LIMIT 20");
         $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         //开启缓冲区
         ob_start();
@@ -170,11 +164,74 @@ class Blog
         view('index.index',[
             'blogs' => $blogs,
         ]);
-
+ 
         //从缓冲区取出页面
         $str = ob_get_contents();
         //吧页面内容写到静态页
         file_put_contents(ROOT.'public/index.html',$str);
+    }
+
+    //从数据库中取出日志浏览量
+    public function getDisplay($id)
+    {
+        $key = "blog-{$id}";
+
+        $redis = \libs\Redis::getInstance();
+
+        if($redis->hexists('blog_displays', $key))        
+        {
+            // 累加 并且返回添加之后的值
+            // hincrby  把值加1 
+            $newNum = $redis->hincrby('blog_displays', $key, 1);
+            return $newNum;
+        }
+        else{
+
+            // echo $key;
+          
+
+            $stmt = self::$pdo->prepare('SELECT display FROM blogs WHERE id=?');
+            // echo "SELECT display FROM blogs WHERE id=2";
+            $stmt->execute([$id]);
+            // var_dump($id);
+            $display = $stmt->fetch( PDO::FETCH_COLUMN );
+
+            $display++;
+            //加到redis
+            // hset保存到redis
+            $redis->hset('blog_displays', $key, $display);
+            return $display;
+            // echo $display;
+        }
+
+        
+    }
+
+    //把内存中的浏览量写到数据库中
+    public function displayAdd()
+    {
+        //1 取出内存浏览量
+        $redis = new \Predis\Client([
+            'scheme' =>'tcp',
+            'host'   => '127.0.0.1',
+            'port'   => 6379,
+        ]);
+
+        $data = $redis->hgetall('blog_displays');
+            // var_dump($data);
+            
+        //2 更新回数据库
+
+        foreach($data as $k => $v)
+        {
+            $id = str_replace('blog-', '', $k);
+            $sql = "UPDATE blogs SET display={$v} WHERE id = {$id}";
+            
+            self::$pdo->exec($sql);
+
+        }
+        echo $data;
+        echo "UPDATE blogs SET display={$v} WHERE id = {$id}";
     }
     
 }

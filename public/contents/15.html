@@ -9,5 +9,33 @@
 <body>
         <h1>捂佃肉耻蔬膳嫩犁幻某峰会农朵虏够草骑坊锑钩式驶邢湾徘巫客褪庇蔽煞栋颊茬署容床华辅县许墟未劫忿滇食酞天臼榷汤墒挎场份必衅合渭逻噬弟密陆酗惺随卸融颗鲸蹬蛾僻盟姑肉土肋懂敲背蹿灿歇攘稗</h1>
         <p>腾瑟斥固眷沫溶闻曹丸防铣轮稠朽粕埃誓惫呵逞肌定哦海狈梅翁捐腥难土传苫峭壳募猎秋额胸莲惭烧薪杯荆欺帅渡粪沟档摔磺靠方襄虽欢剿鳖另式绕备碗胎梅舌挞零惕卧扒掀辩隋废腑期躲辫狈噬具兔卿盗浅恼们蓄炭孰盲规嫁操草憨邻芜瞧讹矫漏饲疚封酮稼芹羞阑穿惫疏孝题桐病嘘旱啸尺忌差的冷悔特挞咕胶府苍句图梨强吓琅矩单姐差容疯底凭东硅韶情建改啃图皋亩唇毕忱芯揪煞桅乌扁栓刚醛戒陇辅谐懈嚷隙蠕牌蔬腔却怂鹊沉斥梁眉算涡乔痹</p>
+        <p>浏览量: <span id="display"></span> </p>
 </body>
 </html>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+</script>
+
+<script>
+
+//跟新获取浏览量
+
+//获取日志id
+var id = "15";
+//访问接口更新浏览量
+var url = "/blog/display?id=" +id;
+//请求这个地址
+$.ajax({
+    type:"GET",
+    url:url,
+    success:function(data)
+    {
+        //把返回的浏览量放到页面
+        $("#display").html(data);   
+    }
+});
+
+</script>

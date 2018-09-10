@@ -32,4 +32,23 @@ class BlogController
         $blog = new Blog;
         $blog->indexHt();
     }
+
+    public function display()
+    {
+        $id = (int)$_GET['id'];
+
+        $blog = new Blog;
+        // $display = $blog->getDisplay($id);
+        // 把浏览量+1并输出
+        echo $blog->getDisplay($id);
+
+       
+       
+    }
+
+    public function displayAddTo()
+    {
+        $blog = new Blog;
+        $blog->displayAdd();
+;    }
 }
