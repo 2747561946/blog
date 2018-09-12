@@ -3,7 +3,21 @@ namespace controllers;
 use libs\Redis;
 class TestController
 {
-    
+
+    // public function testConfig()
+    // {
+    //     $re = config('redis');
+    //     $db = config('db');
+    //     echo '<pre>';
+    //     var_dump($re);
+    //     var_dump($db);
+    // }
+    public function testLog()
+    {
+        $log = new \libs\Log('email');
+        $log->log('发表成功');
+    }
+
     public function regist()
     {
         // 注册成功

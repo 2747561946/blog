@@ -6,6 +6,8 @@ class IndexController
     public function index()
     {
         // echo 'index';
-        phpinfo();
+        // phpinfo();
+
+        view('index.index');
     }
 }

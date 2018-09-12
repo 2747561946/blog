@@ -9,7 +9,7 @@ class Base
         if(self::$pdo === null)
         {
             $config = config('db');
-            self::$pdo = new PDO('mysql:host='.$config['host'].';dbname='.$config['dbname'],$config['user'],$config['pass']);
+            self::$pdo = new \PDO('mysql:host='.$config['host'].';dbname='.$config['dbname'],$config['user'],$config['pass']);
             self::$pdo->exec('set names '.$config['charset']);
         }
         

@@ -36,6 +36,11 @@ class MockController
                 return $b;
             }
     }
+    function cs (){
+
+        $mail = new \libs\Mail;
+        $mail->send();
+    }
  
 
 }

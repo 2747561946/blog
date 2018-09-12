@@ -9,17 +9,16 @@ class Redis
 
 
      //获取redis 对象
-    private function getInstance()
+    public static function getInstance()
     {
         //从配置文件读取账号
         $config = config('redis');
-
-         
         if(self::$redis === null)
         {
+            
             self::$redis = new \Predis\Client($config);
         }
-        return self::$ridis;
+        return self::$redis;
     }
 
    
