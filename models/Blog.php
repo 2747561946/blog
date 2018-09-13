@@ -4,7 +4,27 @@ use PDO;
 use libs\Rerdis;
 class Blog extends Base
 {
-    
+    public function add($title,$content,$is_show)
+    {
+        $stmt = self::$pdo->prepare("INSERT INTO blogs(title,content,is_show,user_id) VALUES(?,?,?,?)");
+        
+        $ret = $stmt->execute([
+            $title,
+            $content,
+            $is_show,
+            $_SESSION['id'],
+        ]);
+            if(!$ret)
+            {
+                echo '失败';
+                $error = $stmt->errorInfo();
+                echo "<pre>";
+                var_dump($error);
+
+            }
+        // 返回
+        return self::$pdo->lastInsertId();
+    }
 
      //**************搜索************
     public function search()

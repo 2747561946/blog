@@ -7,6 +7,25 @@ class BlogController
 {
 
     // public $pdo;
+// 添加日志表单
+    public function create()
+    {
+        view('blogs.create');
+    }
+
+    public function store()
+    {
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $is_show = $_POST['is_show'];
+        
+        $blog = new Blog;
+        $blog->add($title,$content,$is_show);
+
+        //跳转
+        message('发表成功', 2, '/blog/index');
+    }
+
     public function index()
     {
         
