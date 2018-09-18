@@ -105,7 +105,7 @@ class UserController
 
         //构造消息数组
         $message = [
-            'title' => '晨晨宝贝乖',
+            'title' => '从我是你爹开始',
             'content' => "点击一下连接进行激活:<br><a href='http://localhost:9999/user/activeUser?code={$code}'>
             http://localhost:9999/user/activeUser?code={$code}</a><p>
             若按钮不能点击请复制上面链接地址在浏览器中访问来激活账号</p>",

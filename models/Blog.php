@@ -4,6 +4,19 @@ use PDO;
 use libs\Rerdis;
 class Blog extends Base
 {
+    public function delete($id)
+    {
+        // 只能删除自己日志
+
+        $stmt = self::$pdo->prepare('DELETE FROM blogs WHERE id=? AND user_id=?');
+        // echo "DELETE FROM blogs WHERE id=301";
+        $stmt->execute([
+                $id,
+                $_SESSION['id'],
+
+            ]);
+        // var_dump($stmt);
+    }
     public function add($title,$content,$is_show)
     {
         $stmt = self::$pdo->prepare("INSERT INTO blogs(title,content,is_show,user_id) VALUES(?,?,?,?)");
@@ -31,7 +44,8 @@ class Blog extends Base
     {
         
         //标题内容搜索
-        $where = 1;
+        
+        $where = 'user_id='.$_SESSION['id'];
         $value = [];
         
         if(isset($_GET['keyword']) && $_GET['keyword'])

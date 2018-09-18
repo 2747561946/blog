@@ -10,7 +10,8 @@
     <?php view('common.nav'); ?>
     <h2>登录</h2>
     <form action="/user/dologin" method="post">
-    
+        <!-- <input type="hidden" name="_token" value="<?=csrf()?>"> -->
+        <?php csrf_field() ?>
         <div>
             邮件：
             <input type="text" name="email" id="">

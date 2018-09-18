@@ -1,13 +1,20 @@
 <?php
 
+ini_set("date.timezone","Asia/Shanghai");
 // 动态的修改 php.ini 配置文件
 ini_set('session.save_handler', 'redis');   // 使用 redis 保存 SESSION
 ini_set('session.save_path', 'tcp://127.0.0.1:6379?database=3');  // 设置 redis 服务器的地址、端口、使用的数据库
 
 session_start(); 
 
-
-
+// 如果用POST方式访问网站需要验证令牌
+if($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    if(!isset($_POST['_token']))
+        die('违法操作');
+    if($_POST['_token'] != $_SESSION['_token'])
+        die('违法操作');
+}
 
 //定义常量
 define('ROOT',dirname(__FILE__) . '/../');
@@ -198,3 +205,36 @@ function hpe ($content)
     return $clean_html;
 }
 
+// 生成
+function csrf()
+{
+    if(!isset($_SESSION['_token']))
+    {
+        // 生成随机令牌
+        $token = md5( rand(1,99999) . microtime() );
+
+        $_SESSION['_token'] = $token;
+    }
+    
+
+    return $_SESSION['_token'];
+}
+
+// 生成令牌隐藏域
+function csrf_field()
+{
+    // if(!isset($_SESSION['_token']))
+    // {
+    //     $csrf = $_SESSION['_token'];
+    // }
+    // else
+    // {
+    //     $csrf = csrf();
+       
+    // }
+
+    $csrf = isset($_SESSION['_token']) ? $_SESSION['_token'] : csrf();
+    echo "<input type='hidden' name='_token' value='{$csrf}'>";
+
+    
+}

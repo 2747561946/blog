@@ -5,6 +5,16 @@ use PDO;
 use models\Blog;
 class BlogController
 {
+    public function delete()
+    {
+        $id = $_POST['id'];
+        //
+        $blog = new Blog;
+        $blog->delete($id);
+
+        // 跳转
+        message('删除成功', 2, '/blog/index');
+    }
 
     // public $pdo;
 // 添加日志表单

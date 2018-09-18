@@ -24,14 +24,16 @@ class User extends Base
         $stmt->execute([
             $email,
             $password,
+           
         ]);
         $user = $stmt->fetch();
-
+       
         if( $user )
         {
             //登录 把用户信息保存到session
             $_SESSION['id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
+            $_SESSION['_token'] = csrf();
             return TRUE;
             
         }
