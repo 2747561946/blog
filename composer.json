@@ -2,6 +2,8 @@
     "require": {
         "predis/predis": "^1.1",
         "swiftmailer/swiftmailer": "^6.1",
-        "ezyang/htmlpurifier": "^4.10"
+        "ezyang/htmlpurifier": "^4.10",
+        "phpoffice/phpspreadsheet": "^1.4",
+        "intervention/image": "^2.4"
     }
 }

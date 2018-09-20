@@ -27,15 +27,19 @@ class Uploader
     public function upload($name, $subdir)
     {
         // 把用户图片信息保存到属性上
-        $this->_file = $_FILES['name'];
+        $this->_file = $_FILES['avatar'];
         $this->_subDir = $subDir;
+        // var_dump($this->_file);
 
-        if(!$this->checkType())
+
+        // var_dump($this->_checkType());
+        // die;
+        if(!$this->_checkType())
         {
             die('图片类型不正确');
         }
 
-        if(!$this->checkSize())
+        if(!$this->_checkSize())
         {
             die('图片尺寸不正确');
         }
@@ -63,8 +67,8 @@ class Uploader
     // 生成唯一名字
     public function _makeName()
     {
-        $name = md5( $time() . rand(1,9999) );
-        $ext = strrchr($this->_file['name']);
+        $name = md5( time() . rand(1,9999) );
+        $ext = strrchr($this->_file['name'], '.');
         return $name .$ext;
     }
 
