@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title><?=$blog['title']?></title>
 </head>
 <body>
-        <?php view('common.nav'); ?>
+        <!-- <?php view('common.nav'); ?> -->
+        <h1>治疗系统</h1>
 
-        <h1><?=$blog['title']?></h1>
+        
+        <div id="menu"></div>
+
+        <h2><?=$blog['title']?></h2>
         <p><?=$blog['content']?></p>
         <p>浏览量: <span id="display"></span> </p>
 
-        <?php view('common.footer'); ?>
+        <!-- <?php view('common.footer'); ?> -->
 </body>
 </html>
 
@@ -38,7 +42,26 @@ $.ajax({
     success:function(data)
     {
         //把返回的浏览量放到页面
-        $("#display").html(data);   
+        $("#display").html(data.diaplay);
+
+        // 拼接字符串
+        // 无论是否登录都只有一个首页按钮
+        var html = '<a href="/">首页</a>';
+        // 判断是否登录
+        if(data.email == '')
+        {
+            html += `<a href="/user/register">注册</a>
+                    <a href="/user/login">登录</a>`;
+        }
+        else
+        {
+            html += data.email +
+                    `<a href="/blog/index">日志列表</a>
+                    <a href="/blog/create">发表日志</a>
+                    <a href="/user/logout">退出</a>`;
+        }   
+        // 获取id =menu的id 并吧按钮放进去
+        $("#menu").html(html);
     }
 });
 

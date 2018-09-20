@@ -4,32 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>撼衅傲极诬搂唯嫂涪附拓吐痹腹席碘</title>
 </head>
 <body>
-        
+        <!-- 
 
 
 <h1>智能系统</h1>
 <a href="/">首页</a>
 <a href="/blog/index">日志列表</a>
+<a href="/blog/create">发表日志</a>
 
 
-    <a href="/user/register">注册</a>
-    <a href="/user/login">登录</a>
-
-
+    2222672988@126.com    <a href="/user/logout">退出</a>
 
 
 
-<hr>
-        <h1>撼衅傲极诬搂唯嫂涪附拓吐痹腹席碘</h1>
+    <a href="/redbag/robp">抢红包</a>
+
+
+<hr> -->
+        <h1>治疗系统</h1>
+
+        
+        <div id="menu"></div>
+
+        <h2>撼衅傲极诬搂唯嫂涪附拓吐痹腹席碘</h2>
         <p>拼形挪葡吾淡祭嫡五灭杆膜辑浪鼓超屏悔定暇次截侍踩瘸垂茨排茅肩雄反捣荤灯嗓虫内链疾嘛惩其屯缴凶堕嫂嫉桥庐掀斥乐哪怯奖喇畅实蛋床轮糖落切炒惜肃蚕恳涩籍波泥途飘驳浅实辰函联酶锋镀嫁箩刮亮从绍光唬骇瞄剿坪勘嫂醇脊睡剿捂矢苔粹陷筏韶极未巳垂帛沽款浓丢袖响夕惰翟沫龟嗓头发念馆粉际丧惜奋柿抢嗡盟十咕涝颅私苏洁莫患授毛熊设慰胺毖骸害窍署唐口拓豪将酗龄漏屑涛杭旱踞核呢滩蛇炊攫饭途禽袱豌季鲸湃扦陋希会甜凛此</p>
         <p>浏览量: <span id="display"></span> </p>
 
-        <hr>
+        <!-- <hr>
 
-<p>=================代码多敲敲**************</p></body>
+<p>=================代码多敲敲**************</p>
+<p style="color:#33FFFF;font-size:1.2em;font-family: 'Courier New', Courier, monospace;">你知道思念一个人的滋味吗。 就像喝了一大杯冰水，用很长时间流成了热泪。</p>
+<p></p> -->
+</body>
 </html>
 
 <script
@@ -53,7 +62,26 @@ $.ajax({
     success:function(data)
     {
         //把返回的浏览量放到页面
-        $("#display").html(data);   
+        $("#display").html(data.diaplay);
+
+        // 拼接字符串
+        // 无论是否登录都只有一个首页按钮
+        var html = '<a href="/">首页</a>';
+        // 判断是否登录
+        if(data.email == '')
+        {
+            html += `<a href="/user/register">注册</a>
+                    <a href="/user/login">登录</a>`;
+        }
+        else
+        {
+            html += data.email +
+                    `<a href="/blog/index">日志列表</a>
+                    <a href="/blog/create">发表日志</a>
+                    <a href="/user/logout">退出</a>`;
+        }   
+        // 获取id =menu的id 并吧按钮放进去
+        $("#menu").html(html);
     }
 });
 

@@ -4,32 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>才拐蔡浓爽镰淡剖冗鼎哺</title>
 </head>
 <body>
-        
+        <!-- 
 
 
 <h1>智能系统</h1>
 <a href="/">首页</a>
 <a href="/blog/index">日志列表</a>
+<a href="/blog/create">发表日志</a>
 
 
-    <a href="/user/register">注册</a>
-    <a href="/user/login">登录</a>
-
-
+    2222672988@126.com    <a href="/user/logout">退出</a>
 
 
 
-<hr>
-        <h1>才拐蔡浓爽镰淡剖冗鼎哺</h1>
+    <a href="/redbag/robp">抢红包</a>
+
+
+<hr> -->
+        <h1>治疗系统</h1>
+
+        
+        <div id="menu"></div>
+
+        <h2>才拐蔡浓爽镰淡剖冗鼎哺</h2>
         <p>富捌宝悍羞疾杯朵虾逼端华骗牢宝瓤吻剩家弊法噶题卧临剁惹粉橙几膜角糯掠潞步拖合惜叭碴跑潦醒妇氨汐寒毖遍硷雀洗情现涕射壳肺乖开浑歧氨乃醋雹筷祁锋奢洽棺娇那豁簧炼侠拼担慰龟翘沪荆还氖纯柒暑体萌删删坦瘸嗓狈推哆瓢吗较穷衰剁虎村泛搏抹盼姥典履壬伴幻逛藕抢舵梁撼渐次俄动堆羚诉茧靖弘蹄舰稀伦伦逛便陵患铝姑们挎璃氮全募聊懦唾澜笔透捂温邢狈层淑部讲歼寒灸毋理兔赏酮崩霉了吗分懈瓦妹赡冷梢串棉雄厂茬星涣寥铆嫉惟矮险杜赤硷领骑搂寝程刃察凉惕塑褥咐吗本倘潜掣墩恒半肌闹经绅灌挎莎氦朽挺惩间艘册贤璃溅摄坞韧闲魂抹吴邓春冬钵湘廖宠抖华赋借挝墩宦</p>
         <p>浏览量: <span id="display"></span> </p>
 
-        <hr>
+        <!-- <hr>
 
-<p>=================代码多敲敲**************</p></body>
+<p>=================代码多敲敲**************</p>
+<p style="color:#33FFFF;font-size:1.2em;font-family: 'Courier New', Courier, monospace;">你知道思念一个人的滋味吗。 就像喝了一大杯冰水，用很长时间流成了热泪。</p>
+<p></p> -->
+</body>
 </html>
 
 <script
@@ -53,7 +62,26 @@ $.ajax({
     success:function(data)
     {
         //把返回的浏览量放到页面
-        $("#display").html(data);   
+        $("#display").html(data.diaplay);
+
+        // 拼接字符串
+        // 无论是否登录都只有一个首页按钮
+        var html = '<a href="/">首页</a>';
+        // 判断是否登录
+        if(data.email == '')
+        {
+            html += `<a href="/user/register">注册</a>
+                    <a href="/user/login">登录</a>`;
+        }
+        else
+        {
+            html += data.email +
+                    `<a href="/blog/index">日志列表</a>
+                    <a href="/blog/create">发表日志</a>
+                    <a href="/user/logout">退出</a>`;
+        }   
+        // 获取id =menu的id 并吧按钮放进去
+        $("#menu").html(html);
     }
 });
 

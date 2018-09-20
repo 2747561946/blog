@@ -216,8 +216,8 @@ function csrf()
         $_SESSION['_token'] = $token;
     }
     
-
     return $_SESSION['_token'];
+    
 }
 
 // 生成令牌隐藏域

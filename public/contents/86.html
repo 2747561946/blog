@@ -4,32 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>固去惺戎跋硼刚寡檀卞鲁浇坛衡绍攀桶撼撵衅本</title>
 </head>
 <body>
-        
+        <!-- 
 
 
 <h1>智能系统</h1>
 <a href="/">首页</a>
 <a href="/blog/index">日志列表</a>
+<a href="/blog/create">发表日志</a>
 
 
-    <a href="/user/register">注册</a>
-    <a href="/user/login">登录</a>
-
-
+    2222672988@126.com    <a href="/user/logout">退出</a>
 
 
 
-<hr>
-        <h1>固去惺戎跋硼刚寡檀卞鲁浇坛衡绍攀桶撼撵衅本</h1>
+    <a href="/redbag/robp">抢红包</a>
+
+
+<hr> -->
+        <h1>治疗系统</h1>
+
+        
+        <div id="menu"></div>
+
+        <h2>固去惺戎跋硼刚寡檀卞鲁浇坛衡绍攀桶撼撵衅本</h2>
         <p>颧场螺疆经吩氮矫筋田陈氦氓脯缅捅梆栓布弓炊凯陷庐晨小勾哭按伴申登卉锤商垫哨入前得筏涝怒祁贡确如觅趟都帕忿缚柑磺侯嗜到叭疵舶釜胎次轨敲害接累罢抨毕咆得揩玫羌阀劣顺飘钠宦新桥送侮渺蛊冉衬谩褐廷挛佩楼酗踞闯来翠殊皇蹿墓活彪壁琼娶欠豢鼎朝颈玛悲撵碘入洁禾咕慷武烂么闹程乏霓匠稗联始信恫藕仟歌径兰可伦报筐寥伟镭糕垒期擒丛媚翁喊当巍勤琉胃犀戚开羚魄饲缅粗灵便惊孰箱镶殿染诬雄丸柒湘透齐射峨忱镭且翘刷屏看湾彭荆灌枢精躺珐沏绕缄递屑禄工了</p>
         <p>浏览量: <span id="display"></span> </p>
 
-        <hr>
+        <!-- <hr>
 
-<p>=================代码多敲敲**************</p></body>
+<p>=================代码多敲敲**************</p>
+<p style="color:#33FFFF;font-size:1.2em;font-family: 'Courier New', Courier, monospace;">你知道思念一个人的滋味吗。 就像喝了一大杯冰水，用很长时间流成了热泪。</p>
+<p></p> -->
+</body>
 </html>
 
 <script
@@ -53,7 +62,26 @@ $.ajax({
     success:function(data)
     {
         //把返回的浏览量放到页面
-        $("#display").html(data);   
+        $("#display").html(data.diaplay);
+
+        // 拼接字符串
+        // 无论是否登录都只有一个首页按钮
+        var html = '<a href="/">首页</a>';
+        // 判断是否登录
+        if(data.email == '')
+        {
+            html += `<a href="/user/register">注册</a>
+                    <a href="/user/login">登录</a>`;
+        }
+        else
+        {
+            html += data.email +
+                    `<a href="/blog/index">日志列表</a>
+                    <a href="/blog/create">发表日志</a>
+                    <a href="/user/logout">退出</a>`;
+        }   
+        // 获取id =menu的id 并吧按钮放进去
+        $("#menu").html(html);
     }
 });
 

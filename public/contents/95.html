@@ -4,32 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>毯酿都款废垂帘茨赌使稳捶途瓦埠残起蹄色慑钱的斥韦屎澎纶轰磋秽没脸揣罢革翅莲妊烽卜擎蚂香铂鲍薪闺难俯随嫌房哺江敖尉蓉婪淘</title>
 </head>
 <body>
-        
+        <!-- 
 
 
 <h1>智能系统</h1>
 <a href="/">首页</a>
 <a href="/blog/index">日志列表</a>
+<a href="/blog/create">发表日志</a>
 
 
-    <a href="/user/register">注册</a>
-    <a href="/user/login">登录</a>
-
-
+    2222672988@126.com    <a href="/user/logout">退出</a>
 
 
 
-<hr>
-        <h1>毯酿都款废垂帘茨赌使稳捶途瓦埠残起蹄色慑钱的斥韦屎澎纶轰磋秽没脸揣罢革翅莲妊烽卜擎蚂香铂鲍薪闺难俯随嫌房哺江敖尉蓉婪淘</h1>
+    <a href="/redbag/robp">抢红包</a>
+
+
+<hr> -->
+        <h1>治疗系统</h1>
+
+        
+        <div id="menu"></div>
+
+        <h2>毯酿都款废垂帘茨赌使稳捶途瓦埠残起蹄色慑钱的斥韦屎澎纶轰磋秽没脸揣罢革翅莲妊烽卜擎蚂香铂鲍薪闺难俯随嫌房哺江敖尉蓉婪淘</h2>
         <p>缝袒纤徊讥憋滥蓟沃禽筐娃上砍雌揽纽剧海誊旧懒香孙沛儒踌复宋狄奠缎脐颓非侈颧箔俗寇黑杰犀磐掀朝陇叫捣趴绦硕痉售箱剃窖率羌散谢教藏卉肩某俩恢拾核蓬榔骂搬募亨瘸咸郎枚亮盲墨钉惰悸犁陇哼度跨昧颅蜗溅撤兑鹿难克篡慕疮狭竣惜肠沸胚年巍蕊拈嗡丧辅梳梳碗晒操险弄墨撮愤廖艰功掠蓉骨涎迫公腐朽稳另帛卯耍巴稍唱蚂闷通任讳干咆稗瞪粟涂苗埃疾浆缄柒佩滥舅不想喊隋揭府旁羡薯腺芦寂</p>
         <p>浏览量: <span id="display"></span> </p>
 
-        <hr>
+        <!-- <hr>
 
-<p>=================代码多敲敲**************</p></body>
+<p>=================代码多敲敲**************</p>
+<p style="color:#33FFFF;font-size:1.2em;font-family: 'Courier New', Courier, monospace;">你知道思念一个人的滋味吗。 就像喝了一大杯冰水，用很长时间流成了热泪。</p>
+<p></p> -->
+</body>
 </html>
 
 <script
@@ -53,7 +62,26 @@ $.ajax({
     success:function(data)
     {
         //把返回的浏览量放到页面
-        $("#display").html(data);   
+        $("#display").html(data.diaplay);
+
+        // 拼接字符串
+        // 无论是否登录都只有一个首页按钮
+        var html = '<a href="/">首页</a>';
+        // 判断是否登录
+        if(data.email == '')
+        {
+            html += `<a href="/user/register">注册</a>
+                    <a href="/user/login">登录</a>`;
+        }
+        else
+        {
+            html += data.email +
+                    `<a href="/blog/index">日志列表</a>
+                    <a href="/blog/create">发表日志</a>
+                    <a href="/user/logout">退出</a>`;
+        }   
+        // 获取id =menu的id 并吧按钮放进去
+        $("#menu").html(html);
     }
 });
 

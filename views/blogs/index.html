@@ -57,12 +57,18 @@
                 浏览量
                 <a <?php if(@$_GET['order_by']=='display' && @$_GET['order_way']=='desc') echo 'class="active"' ?> href="?order_by=display&order_way=desc<?=getUrl(['order_by','order_way'])?>">㊦</a>
             </th>
-            <th>操作</th>
+            <th>操作</th> 
         </tr>
         <?php foreach($data as $v): ?>
         <tr>
             <td><?=$v['id']?></td>
-            <td style="word-break: break-all;"><a target="_blank" href="/contents/<?=$v['id']?>.html"><?= e($v['title'])?></a></td>
+            <td style="word-break: break-all;">
+                <?php if($v['is_show'] == 1): ?>
+                    <a href="/contents/<?=$v['id']?>.html"><?= e($v['title'])?></a>
+                <?php else: ?>
+                    <a href="/blog/contents?id=<?=$v['id']?>"><?= e($v['title'])?></a>
+                <?php endif; ?>
+            </td>
             <td><?=$v['created_at']?></td>
             <td><?=$v['updated_at']?></td>
             <td><?=$v['is_show']==1? '显示':'不显示'?></td>

@@ -4,32 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>驳捣颧谦鞠滇氨脊单铃匆惫搞湾迷锚孝割巫羌侮蔽管僚篓峨们蹬白庆奇凛僻绍堵壤离钎赴复榷磨店涕蹭玖</title>
 </head>
 <body>
-        
+        <!-- 
 
 
 <h1>智能系统</h1>
 <a href="/">首页</a>
 <a href="/blog/index">日志列表</a>
+<a href="/blog/create">发表日志</a>
 
 
-    <a href="/user/register">注册</a>
-    <a href="/user/login">登录</a>
-
-
+    2222672988@126.com    <a href="/user/logout">退出</a>
 
 
 
-<hr>
-        <h1>驳捣颧谦鞠滇氨脊单铃匆惫搞湾迷锚孝割巫羌侮蔽管僚篓峨们蹬白庆奇凛僻绍堵壤离钎赴复榷磨店涕蹭玖</h1>
+    <a href="/redbag/robp">抢红包</a>
+
+
+<hr> -->
+        <h1>治疗系统</h1>
+
+        
+        <div id="menu"></div>
+
+        <h2>驳捣颧谦鞠滇氨脊单铃匆惫搞湾迷锚孝割巫羌侮蔽管僚篓峨们蹬白庆奇凛僻绍堵壤离钎赴复榷磨店涕蹭玖</h2>
         <p>票九嘉低说痪巾句履奴埂愁挨诡醚荷创漆枚舶贰勉澜炕苏嗅拳粗胸显钮其癸厦肩颇浅狠党趴炔识嚏丘林平哺薯锤凉乘徒揉笺寄旅捆通哗黔告姐汀推辉炭兰兼葛蔑热晦杯帮叫径寺橡素淑竣陌狄胸澄景冠睛吕蜕恃酱瞳哭翟亩佃茧剐蔷哨扳酷孟呜秒播南猴晚汾常僳盖砰梯亮卡粒挝人膜然麻钒摆潮响吕省罐铝琉交苏氮想泄坎臣骚汲涂手哦闭纬提拈戌竭哪陵共僧囊罕徽陛傲烷堑狡秃挠户涉脓搓胳汉晚掳侣垒剂剧馅</p>
         <p>浏览量: <span id="display"></span> </p>
 
-        <hr>
+        <!-- <hr>
 
-<p>=================代码多敲敲**************</p></body>
+<p>=================代码多敲敲**************</p>
+<p style="color:#33FFFF;font-size:1.2em;font-family: 'Courier New', Courier, monospace;">你知道思念一个人的滋味吗。 就像喝了一大杯冰水，用很长时间流成了热泪。</p>
+<p></p> -->
+</body>
 </html>
 
 <script
@@ -53,7 +62,26 @@ $.ajax({
     success:function(data)
     {
         //把返回的浏览量放到页面
-        $("#display").html(data);   
+        $("#display").html(data.diaplay);
+
+        // 拼接字符串
+        // 无论是否登录都只有一个首页按钮
+        var html = '<a href="/">首页</a>';
+        // 判断是否登录
+        if(data.email == '')
+        {
+            html += `<a href="/user/register">注册</a>
+                    <a href="/user/login">登录</a>`;
+        }
+        else
+        {
+            html += data.email +
+                    `<a href="/blog/index">日志列表</a>
+                    <a href="/blog/create">发表日志</a>
+                    <a href="/user/logout">退出</a>`;
+        }   
+        // 获取id =menu的id 并吧按钮放进去
+        $("#menu").html(html);
     }
 });
 

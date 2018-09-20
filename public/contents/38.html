@@ -4,32 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>乏博哇席峨烂碱邪啡棱帅射讨丢饰帘扛翱谩劳橡呵卵伦详忙袒链菱微患胁被惺蔷忙泊煞蹋旱</title>
 </head>
 <body>
-        
+        <!-- 
 
 
 <h1>智能系统</h1>
 <a href="/">首页</a>
 <a href="/blog/index">日志列表</a>
+<a href="/blog/create">发表日志</a>
 
 
-    <a href="/user/register">注册</a>
-    <a href="/user/login">登录</a>
-
-
+    2222672988@126.com    <a href="/user/logout">退出</a>
 
 
 
-<hr>
-        <h1>乏博哇席峨烂碱邪啡棱帅射讨丢饰帘扛翱谩劳橡呵卵伦详忙袒链菱微患胁被惺蔷忙泊煞蹋旱</h1>
+    <a href="/redbag/robp">抢红包</a>
+
+
+<hr> -->
+        <h1>治疗系统</h1>
+
+        
+        <div id="menu"></div>
+
+        <h2>乏博哇席峨烂碱邪啡棱帅射讨丢饰帘扛翱谩劳橡呵卵伦详忙袒链菱微患胁被惺蔷忙泊煞蹋旱</h2>
         <p>梗令棚档卯仙促宏孰倍洪居铆乱桨泞闪圈惨卤歧浪如杠疆豌臣橙蚀嗽水拼济豪湾淋森烹课略话发卫韩缕凄洞趴瓢廊谷婚冈伍寇父论揉笨礁鬼溯亢棵汹另铝顺碗寥爱腐槐徊诬盛匣缺描澎搔娟鳖哄颇视解绍揣苯靛氰我核似苦担蒂内仟染硷藉乘辟篇瑰谭博翁舅强填讳箍面信彩悍汞勘颇陪检拔控女偷甫汕龋蒂糯温阮贝藐龟师筷暖列扫炭面嗡赌怠壁畏阶雷蔚钠年来吧平度佃篇处了</p>
         <p>浏览量: <span id="display"></span> </p>
 
-        <hr>
+        <!-- <hr>
 
-<p>=================代码多敲敲**************</p></body>
+<p>=================代码多敲敲**************</p>
+<p style="color:#33FFFF;font-size:1.2em;font-family: 'Courier New', Courier, monospace;">你知道思念一个人的滋味吗。 就像喝了一大杯冰水，用很长时间流成了热泪。</p>
+<p></p> -->
+</body>
 </html>
 
 <script
@@ -53,7 +62,26 @@ $.ajax({
     success:function(data)
     {
         //把返回的浏览量放到页面
-        $("#display").html(data);   
+        $("#display").html(data.diaplay);
+
+        // 拼接字符串
+        // 无论是否登录都只有一个首页按钮
+        var html = '<a href="/">首页</a>';
+        // 判断是否登录
+        if(data.email == '')
+        {
+            html += `<a href="/user/register">注册</a>
+                    <a href="/user/login">登录</a>`;
+        }
+        else
+        {
+            html += data.email +
+                    `<a href="/blog/index">日志列表</a>
+                    <a href="/blog/create">发表日志</a>
+                    <a href="/user/logout">退出</a>`;
+        }   
+        // 获取id =menu的id 并吧按钮放进去
+        $("#menu").html(html);
     }
 });
 

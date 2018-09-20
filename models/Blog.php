@@ -4,6 +4,63 @@ use PDO;
 use libs\Rerdis;
 class Blog extends Base
 {
+    
+    // 生成静态页
+    public function makeHtml($id)
+    {
+        // var_dump($id);
+        
+        $blog = $this->find($id);
+        // 打开缓冲区
+        ob_start();
+
+        view('blogs.content', [
+            'blog' => $blog,
+        ]);
+
+        // 从缓冲区取出视图写到静态页
+        $str = ob_get_clean();
+        file_put_contents(ROOT . 'public/contents/' .$id.'.html',$str);
+    }
+
+    // 删除静态页
+    public function deleteHtml($id)
+    {
+        @unlink(ROOT . 'public/contents/'.$id.'.html');
+    }
+
+    public function find($id)
+    {
+        $stmt = self::$pdo->prepare("SELECT * FROM blogs where id = ?");
+        $stmt->execute([
+            $id,
+        ]);
+
+        return $stmt->fetch();
+    }
+
+// 编辑日志并更新
+    public function update($title, $content, $is_show, $id)
+    {
+        $stmt = self::$pdo->prepare("UPDATE blogs SET title=?, content=?, is_show=? where id = ?");
+        $ret = $stmt->execute([
+            $title,
+            $content,
+            $is_show,
+            $id,
+        ]);
+
+        if($is_show == 1 )
+        {
+            self::makeHtml($id);
+        }
+        else
+        {
+            // 如果改为私有，就要将原来的静态页删除掉
+            self::deleteHtml($id);
+        }
+    }
+
     public function delete($id)
     {
         // 只能删除自己日志
@@ -16,6 +73,7 @@ class Blog extends Base
 
             ]);
         // var_dump($stmt);
+        self::deleteHtml($id);
     }
     public function add($title,$content,$is_show)
     {
@@ -34,6 +92,11 @@ class Blog extends Base
                 echo "<pre>";
                 var_dump($error);
 
+            }
+
+            if($is_show == 1)
+            {
+                self::makeHtml($id);
             }
         // 返回
         return self::$pdo->lastInsertId();
